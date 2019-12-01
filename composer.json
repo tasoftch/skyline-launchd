@@ -15,7 +15,9 @@
   },
   "require" : {
     "php": "^7.2",
-    "skyline/kernel": "dev-master"
+    "skyline/kernel": "dev-master",
+    "tasoft/value-injector": "dev-master",
+    "tasoft/php-pdo": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "^6"

@@ -36,10 +36,12 @@ use Skyline\Kernel\Config\PluginConfig;
 use Skyline\Launchd\Plugin\LaunchdInitPlugin;
 
 return [
-    PluginConfig::PLUGIN_CLASS => LaunchdInitPlugin::class,
-    PluginConfig::PLUGIN_EVENT_SECTION => PluginConfig::EVENT_SECTION_BOOTSTRAP,
-    PluginConfig::PLUGIN_EVENT_NAME => SKY_EVENT_BOOTSTRAP,
+    'launchd' => [
+        PluginConfig::PLUGIN_CLASS => LaunchdInitPlugin::class,
+        PluginConfig::PLUGIN_EVENT_SECTION => PluginConfig::EVENT_SECTION_BOOTSTRAP,
+        PluginConfig::PLUGIN_EVENT_NAME => SKY_EVENT_BOOTSTRAP,
 
-    PluginConfig::PLUGIN_METHOD => 'checkCLICommand',
-    PluginConfig::PLUGIN_PRIORITY => 50
+        PluginConfig::PLUGIN_METHOD => 'checkCLICommand',
+        PluginConfig::PLUGIN_PRIORITY => 50
+    ]
 ];

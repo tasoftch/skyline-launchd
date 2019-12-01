@@ -41,7 +41,9 @@ return [
         LaunchdDaemonServer::SERVICE_NAME => [
             AbstractFileConfiguration::SERVICE_CLASS => LaunchdDaemonServer::class,
             AbstractFileConfiguration::SERVICE_INIT_ARGUMENTS => [
-                'pdo' => '$PDO'
+                'pdo' => '$PDO',
+                'remainCompletedTasks' => '%launchd.task.completed.remain%',
+                'initial-schedule' => '%launchd.schedule.initial%'
             ]
         ]
     ]
