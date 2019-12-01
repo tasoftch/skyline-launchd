@@ -32,26 +32,7 @@
  *
  */
 
-namespace Skyline\Launchd\Plugin;
-
-
-use Skyline\Launchd\LaunchdDaemonServer;
-use TASoft\EventManager\EventManager;
-use TASoft\EventManager\SectionEventManager;
-use TASoft\Service\ServiceManager;
-
-class LaunchdInitPlugin
-{
-    public function checkCLICommand(string $eventName, $event, EventManager $eventManager, ...$arguments)
-    {
-        if(php_sapi_name() == 'cli') {
-            /** @var LaunchdDaemonServer $server */
-            $server = ServiceManager::generalServiceManager()->get(LaunchdDaemonServer::SERVICE_NAME);
-
-            $server->run($GLOBALS["argc"], $GLOBALS["argv"]);
-
-            $eventManager->trigger(SKY_EVENT_TEAR_DOWN);
-            exit();
-        }
-    }
-}
+return [
+    'launchd.task.completed.remain' => 'now -7days',
+    'launchd.schedule.initial' => '* * * * *'
+];

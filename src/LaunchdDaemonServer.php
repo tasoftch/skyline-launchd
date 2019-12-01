@@ -35,7 +35,29 @@
 namespace Skyline\Launchd;
 
 
+use DateTime;
+use Skyline\Launchd\Interval\Parse\IntervalStringParser;
+use TASoft\Util\PDO;
+
 class LaunchdDaemonServer
 {
     const SERVICE_NAME = 'launchdService';
+
+    /** @var PDO */
+    private $PDO;
+    /** @var DateTime|null  */
+    private $remainSince;
+    /** @var string */
+    private $initialSchedule;
+
+    public function __construct($PDO, $remainSince, $initialSchedule)
+    {
+        $this->PDO = $PDO;
+        $this->remainSince = $remainSince ? new DateTime($remainSince) : NULL;
+        $this->initialSchedule = IntervalStringParser::parse($initialSchedule);
+    }
+
+    public function run($argc, $argv) {
+        print_r($argv);
+    }
 }
