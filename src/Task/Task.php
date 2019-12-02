@@ -95,6 +95,10 @@ class Task extends AbstractTask
      * @return RunnerInterface
      */
     protected function makeRunner($record): RunnerInterface {
+        if($rn = $record["runner"] ?? NULL) {
+            if($rn instanceof RunnerInterface)
+                return $rn;
+        }
         if($record["active"]) {
             $mt = $record["methodName"];
 
