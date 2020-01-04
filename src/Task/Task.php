@@ -37,6 +37,7 @@ namespace Skyline\Launchd\Task;
 
 use DateTime;
 use Skyline\Launchd\Task\Runner\ClassMethodRunner;
+use Skyline\Launchd\Task\Runner\FunctionCallRunner;
 use Skyline\Launchd\Task\Runner\NullRunner;
 use Skyline\Launchd\Task\Runner\RunnerInterface;
 use Skyline\Launchd\Task\Runner\ServiceMethodRunner;
@@ -46,6 +47,7 @@ class Task extends AbstractTask
     const OPTION_RESCHEDULE_ACTUAL_DATE = 1;
     const OPTION_RESCHEDULE_TASK_DATE = 2;
     const OPTION_REPEAT_ON_FATAL_ERROR = 4;
+    const OPTION_REPORT_ERRORS = 8;
 
     /** @var int */
     private $options;
@@ -85,7 +87,7 @@ class Task extends AbstractTask
         );
         $this->options = $record["options"]*1;
         $this->label = $record["label"];
-        $this->errorReporting = $record["error_reporting"]*1;
+        $this->errorReporting = ($record["error_reporting"]??0)*1;
     }
 
     /**
@@ -107,6 +109,9 @@ class Task extends AbstractTask
 
             if($sn = $record["serviceName"])
                 return new ServiceMethodRunner($mt, $cn);
+
+            if($mt)
+                return new FunctionCallRunner($mt);
         }
         return new NullRunner();
     }
