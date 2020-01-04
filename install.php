@@ -65,6 +65,52 @@ $SQL = [
     options         int           null,
     error_reporting int default 0 not null
 );"
+    ],
+
+    'SKY_LAUNCHD_SCHEDULE' => [
+        'mysql' => "create table SKY_LAUNCHD_SCHEDULE
+(
+    id           int auto_increment
+        primary key,
+    task         int      not null,
+    nextDate     datetime not null,
+    launchedDate datetime null,
+    success      int(1)   null,
+    output       text     null
+);",
+        "sqlite" => "create table SKY_LAUNCHD_SCHEDULE
+(
+    id           integer primary key autoincrement,
+    task         int           not null,
+    nextDate     timestamp     not null,
+    launchedDate timestamp     null,
+    success      int           null,
+    output       text null
+);"
+    ],
+
+    "SKY_LAUNCHD_TASK_ERROR" => [
+        'mysql' => "create table SKY_LAUNCHD_TASK_ERROR
+(
+    id       int auto_increment
+        primary key,
+    schedule int              not null,
+    level    int(1) default 1 not null,
+    code     int              not null,
+    message  text             null,
+    file     text             null,
+    line     int              null
+);",
+        'sqlite' => "create table SKY_LAUNCHD_TASK_ERROR
+(
+    id       integer primary key autoincrement,
+    schedule int           not null,
+    level    int           not null,
+    code     int           not null,
+    message  text null,
+    file     text null,
+    line     int           null
+);"
     ]
 ];
 
@@ -77,7 +123,28 @@ if($PDO instanceof \TASoft\Util\PDO) {
     } catch (Exception $exception) {
         if($sql = $SQL["SKY_LAUNCHD_TASK"][ $driver ] ?? NULL) {
             $PDO->exec($sql);
+            echo "SKY_LAUNCHD_TASK created\n";
         } else
-            trigger_error("Could not create SQL table for driver $driver", E_USER_WARNING);
+            trigger_error("Could not create SQL SKY_LAUNCHD_TASK table for driver $driver", E_USER_WARNING);
+    }
+
+    try {
+        $PDO->prepare("SELECT TRUE FROM SKY_LAUNCHD_SCHEDULE LIMIT 1");
+    } catch (Exception $exception) {
+        if($sql = $SQL["SKY_LAUNCHD_SCHEDULE"][ $driver ] ?? NULL) {
+            $PDO->exec($sql);
+            echo "SKY_LAUNCHD_SCHEDULE created\n";
+        } else
+            trigger_error("Could not create SQL SKY_LAUNCHD_SCHEDULE table for driver $driver", E_USER_WARNING);
+    }
+
+    try {
+        $PDO->prepare("SELECT TRUE FROM SKY_LAUNCHD_TASK_ERROR LIMIT 1");
+    } catch (Exception $exception) {
+        if($sql = $SQL["SKY_LAUNCHD_TASK_ERROR"][ $driver ] ?? NULL) {
+            $PDO->exec($sql);
+            echo "SKY_LAUNCHD_TASK_ERROR created\n";
+        } else
+            trigger_error("Could not create SQL SKY_LAUNCHD_TASK_ERROR table for driver $driver", E_USER_WARNING);
     }
 }

@@ -72,8 +72,8 @@ class LaunchdTest extends TestCase
         self::$PDO->exec("create table SKY_LAUNCHD_SCHEDULE
 (
     id           integer primary key autoincrement,
-    task         int           null,
-    nextDate     timestamp     null,
+    task         int           not null,
+    nextDate     timestamp     not null,
     launchedDate timestamp     null,
     success      int           null,
     output       varchar(4369) null
