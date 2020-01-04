@@ -119,7 +119,8 @@ if($PDO instanceof \TASoft\Util\PDO) {
     $driver = $PDO->getAttribute(\TASoft\Util\PDO::ATTR_DRIVER_NAME);
 
     try {
-        $PDO->prepare("SELECT TRUE FROM SKY_LAUNCHD_TASK LIMIT 1");
+        $PDO->exec("SELECT TRUE FROM SKY_LAUNCHD_TASK LIMIT 1");
+        echo "SKY_LAUNCHD_TASK exists.\n";
     } catch (Exception $exception) {
         if($sql = $SQL["SKY_LAUNCHD_TASK"][ $driver ] ?? NULL) {
             $PDO->exec($sql);
@@ -129,7 +130,8 @@ if($PDO instanceof \TASoft\Util\PDO) {
     }
 
     try {
-        $PDO->prepare("SELECT TRUE FROM SKY_LAUNCHD_SCHEDULE LIMIT 1");
+        $PDO->exec("SELECT TRUE FROM SKY_LAUNCHD_SCHEDULE LIMIT 1");
+        echo "SKY_LAUNCHD_SCHEDULE exists.\n";
     } catch (Exception $exception) {
         if($sql = $SQL["SKY_LAUNCHD_SCHEDULE"][ $driver ] ?? NULL) {
             $PDO->exec($sql);
@@ -139,7 +141,8 @@ if($PDO instanceof \TASoft\Util\PDO) {
     }
 
     try {
-        $PDO->prepare("SELECT TRUE FROM SKY_LAUNCHD_TASK_ERROR LIMIT 1");
+        $PDO->exec("SELECT TRUE FROM SKY_LAUNCHD_TASK_ERROR LIMIT 1");
+        echo "SKY_LAUNCHD_TASK_ERROR exists.\n";
     } catch (Exception $exception) {
         if($sql = $SQL["SKY_LAUNCHD_TASK_ERROR"][ $driver ] ?? NULL) {
             $PDO->exec($sql);
