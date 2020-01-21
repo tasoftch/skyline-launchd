@@ -37,9 +37,9 @@ namespace Skyline\Launchd;
 
 use DateTime;
 use Skyline\Kernel\Service\Error\AbstractErrorHandlerService;
-use Skyline\Launchd\Interval\Interval;
-use Skyline\Launchd\Interval\IntervalInterface;
-use Skyline\Launchd\Interval\Parse\IntervalStringParser;
+use TASoft\Util\Interval\Interval;
+use TASoft\Util\Interval\IntervalInterface;
+use TASoft\Util\Interval\Parser\IntervalStringParser;
 use Skyline\Launchd\Task\Runner\ClassMethodRunner;
 use Skyline\Launchd\Task\Runner\FunctionCallRunner;
 use Skyline\Launchd\Task\Runner\ServiceMethodRunner;
