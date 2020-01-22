@@ -32,26 +32,13 @@
  *
  */
 
-namespace Skyline\Launchd\Plugin;
-
-
+use Skyline\CLI\Config\ProcessConfig;
 use Skyline\Launchd\LaunchdDaemonServer;
-use TASoft\EventManager\EventManager;
-use TASoft\EventManager\SectionEventManager;
-use TASoft\Service\ServiceManager;
 
-class LaunchdInitPlugin
-{
-    public function checkCLICommand(string $eventName, $event, EventManager $eventManager, ...$arguments)
-    {
-        if(php_sapi_name() == 'cli') {
-            /** @var LaunchdDaemonServer $server */
-            $server = ServiceManager::generalServiceManager()->get(LaunchdDaemonServer::SERVICE_NAME);
-
-            $server->run($GLOBALS["argc"], $GLOBALS["argv"]);
-
-            $eventManager->trigger(SKY_EVENT_TEAR_DOWN);
-            exit();
-        }
-    }
-}
+return [
+    [
+        ProcessConfig::PROCESS_NAME => 'launchd',
+        ProcessConfig::PROCESS_SERVICE_NAME => LaunchdDaemonServer::SERVICE_NAME,
+        ProcessConfig::PROCESS_METHOD => 'run'
+    ]
+];
